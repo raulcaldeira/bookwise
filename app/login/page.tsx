@@ -1,18 +1,17 @@
-import Image from "next/image"
 import LoginButton from "./_components/loginButton"
+import { getServerSession } from "next-auth"
+import { authOptions } from "../_lib/auth"
+import { redirect } from "next/navigation"
 
-const Login = () => {
+const Login = async () => {
+  const session = await getServerSession(authOptions)
+
+  if (session) {
+    redirect("/")
+  }
+
   return (
     <div className="flex h-full p-5">
-      {/* <div className="w-[800px]">
-        <Image
-          src="images/bookwise-cover.svg"
-          alt="bookwise"
-          width={0}
-          height={200}
-          style={{ height: "100%", width: "auto" }}
-        />
-      </div> */}
       <div
         className="h-full w-[800px] bg-cover bg-center"
         style={{ backgroundImage: "url('images/bookwise-cover.svg')" }}

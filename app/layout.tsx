@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
-import { Nunito_Sans } from "next/font/google"
+import { Nunito } from "next/font/google"
 import "./globals.css"
+import AuthProvider from "./_providers/auth"
 
-const nunitoSans = Nunito_Sans({
+const nunito = Nunito({
   subsets: ["latin-ext"],
 })
 
@@ -18,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br" className="dark">
-      <body className={`${nunitoSans.className} antialiased`}>{children}</body>
+      <body className={`${nunito.className} antialiased`}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   )
 }
