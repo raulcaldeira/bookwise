@@ -1,5 +1,10 @@
 import type { Metadata } from "next"
+import { Nunito_Sans } from "next/font/google"
 import "./globals.css"
+
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin-ext"],
+})
 
 export const metadata: Metadata = {
   title: "Bookwise",
@@ -13,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br" className="dark">
-      <body className="antialiased">{children}</body>
+      <body className={`${nunitoSans.className} antialiased`}>{children}</body>
     </html>
   )
 }
