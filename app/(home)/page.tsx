@@ -1,10 +1,12 @@
-import { Button } from "../_components/ui/button"
+import Sidebar from "../_components/sidebar"
 
 export default function Home() {
   return (
-    <section className="ml-20 mt-20">
-      <h1>Hello</h1>
-      <Button>teste</Button>
+    <section className="flex h-full">
+      <div className="p-5">
+        <Sidebar />
+      </div>
+      <div className="flex-1"></div>
     </section>
   )
 }

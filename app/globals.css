@@ -10,6 +10,12 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .bg-vertical-gradient {
+    background: var(--vertical-gradient);
+  }
+  .bg-horizontal-gradient {
+    background: var(--horizontal-gradient);
+  }
 }
 
 @layer base {
@@ -39,6 +45,8 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --vertical-gradient: linear-gradient(to top, #9694f5, #7fd1cc);
+    --horizontal-gradient: linear-gradient(to left, #9694f5, #7fd1cc);
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -76,6 +84,6 @@ body {
     @apply h-full;
   }
   body {
-    @apply h-full bg-background text-foreground;
+    @apply h-full bg-gray-800 text-foreground;
   }
 }
