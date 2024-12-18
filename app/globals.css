@@ -84,6 +84,6 @@ body {
     @apply h-full;
   }
   body {
-    @apply h-full bg-gray-800 text-foreground;
+    @apply h-full bg-gray-800 text-gray-100;
   }
 }

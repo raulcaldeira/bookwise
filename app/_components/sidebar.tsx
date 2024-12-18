@@ -1,13 +1,14 @@
 import Image from "next/image"
 import SidebarLink from "./sidebar-link"
 import { Binoculars, ChartLine, User } from "lucide-react"
-import { getServerSession } from "next-auth"
-import { authOptions } from "../_lib/auth"
+import { Session } from "next-auth"
 import UserLoggedButton from "./user-logged-button"
 
-const Sidebar = async () => {
-  const session = await getServerSession(authOptions)
+interface SidebarProps {
+  session: Session | null
+}
 
+const Sidebar = ({ session }: SidebarProps) => {
   return (
     <div
       className="flex h-full flex-col justify-between bg-cover bg-center px-14 py-10"
