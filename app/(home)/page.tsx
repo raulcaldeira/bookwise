@@ -9,6 +9,7 @@ import { ScrollArea } from "../_components/ui/scroll-area"
 import Link from "next/link"
 import BookCard from "../_components/book-card"
 import { Book } from "@prisma/client"
+import LastRatingCard from "./_components/last-rating-card"
 
 export interface BooksWithRating extends Book {
   avg_rating: number
@@ -18,14 +19,19 @@ export interface BooksWithRating extends Book {
 export default async function Home() {
   const session = await getServerSession(authOptions)
 
-  const lastReading = await db.rating.findFirst({
-    where: {
-      user_id: (session?.user as any).id,
-    },
-    orderBy: {
-      created_at: "desc",
-    },
-  })
+  const lastReading =
+    session &&
+    (await db.rating.findFirst({
+      where: {
+        user_id: (session?.user as any).id,
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+      include: {
+        book: true,
+      },
+    }))
 
   const recentRatings = await db.rating.findMany({
     include: {
@@ -65,20 +71,32 @@ export default async function Home() {
           icon={<ChartLine size={30} className="text-green-100" />}
           text="Início "
         />
+
         <div className="mt-10 flex gap-16 overflow-hidden">
-          <section className="flex-1">
-            <h3 className="opacity-70">Avaliações mais recentes </h3>
-            <ScrollArea className="mt-4 h-full pr-4">
-              <div className="space-y-4 pb-20">
-                {recentRatings.map((rating) => (
-                  <BookRatingCard
-                    key={rating.user.id + rating.book.id}
-                    rating={rating}
-                  />
-                ))}
-              </div>
-            </ScrollArea>
-          </section>
+          <ScrollArea className="h-full flex-1 pr-4">
+            <div>
+              {session && lastReading && (
+                <section className="mb-10">
+                  <h3 className="opacity-70">Sua última leitura </h3>
+                  <div className="mt-5">
+                    <LastRatingCard rating={lastReading} />
+                  </div>
+                </section>
+              )}
+              <section className="flex-1">
+                <h3 className="opacity-70">Avaliações mais recentes </h3>
+
+                <div className="mt-5 space-y-4 pb-20">
+                  {recentRatings.map((rating) => (
+                    <BookRatingCard
+                      key={rating.user.id + rating.book.id}
+                      rating={rating}
+                    />
+                  ))}
+                </div>
+              </section>
+            </div>
+          </ScrollArea>
           <section className="max-w-[350px]">
             <div className="flex justify-between">
               <h3 className="opacity-70">Livros populares</h3>
