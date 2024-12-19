@@ -39,6 +39,7 @@ const Login = async () => {
               text="Entrar como visitante"
               imagePath="images/rocket-icon.svg"
               loginType="visitante"
+              url="/"
             />
           </div>
         </div>
