@@ -21,8 +21,8 @@ const BookRatingCard = ({ rating }: BookRatingCardProps) => {
     <div className="bg-gray-700 p-6">
       <header className="flex justify-between">
         <div className="flex items-center gap-4">
-          <div className="bg-vertical-gradient rounded-full p-[1px]">
-            <Avatar className="h-9 w-9">
+          <div className="bg-vertical-gradient flex items-center justify-center rounded-full p-[1px]">
+            <Avatar className="h-[40px] w-[40px]">
               <AvatarImage
                 alt="user profile image"
                 // src={session.user.image ? session.user.image : ""}
