@@ -24,7 +24,12 @@ const Sidebar = ({ session }: SidebarProps) => {
             text="Explorar"
             url="/explore"
           />
-          <SidebarLink icon={<User size={24} />} text="Perfil" url="/profile" />
+          <SidebarLink
+            icon={<User size={24} />}
+            text="Perfil"
+            url={`/profile/${(session?.user as any).id}`}
+            hide={session ? false : true}
+          />
         </div>
       </div>
       <UserLoggedButton session={session} />

@@ -8,13 +8,14 @@ interface SidebarLinkProps {
   text: string
   url: string
   icon: ReactNode
+  hide?: boolean
 }
 
-const SidebarLink = ({ text, url, icon }: SidebarLinkProps) => {
+const SidebarLink = ({ text, url, icon, hide = false }: SidebarLinkProps) => {
   const pathname = usePathname()
 
   return (
-    <div className="relative flex px-5">
+    <div className={`relative flex px-5 ${hide && "hidden"}`}>
       <div
         className={`absolute left-0 top-0 h-full w-1 rounded-b-full rounded-t-full ${pathname !== url ? "bg-transparent" : "bg-vertical-gradient"}`}
       ></div>
