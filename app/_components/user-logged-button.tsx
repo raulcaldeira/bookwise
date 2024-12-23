@@ -21,15 +21,17 @@ const UserLoggedButton = ({ session }: UserLoggedButtonProps) => {
       {session?.user ? (
         <div className="flex items-center justify-center gap-4">
           <div className="bg-vertical-gradient rounded-full p-[2px]">
-            <Avatar className="border-vertical-gradient h-9 w-9">
-              <AvatarImage
-                alt="user profile image"
-                src={session.user.image ? session.user.image : ""}
-              />
-              <AvatarFallback className="bg-gray-500 font-bold">
-                {nameInitial}
-              </AvatarFallback>
-            </Avatar>
+            <Link href={`profile/${(session?.user as any).id}`}>
+              <Avatar className="border-vertical-gradient h-9 w-9">
+                <AvatarImage
+                  alt="user profile image"
+                  src={session.user.image ? session.user.image : ""}
+                />
+                <AvatarFallback className="bg-gray-500 font-bold">
+                  {nameInitial}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
           </div>
 
           <span className="font-bold text-gray-200">
