@@ -26,10 +26,10 @@ const BookRatingCard = ({ rating }: BookRatingCardProps) => {
               <AvatarImage
                 alt="user profile image"
                 // src={session.user.image ? session.user.image : ""}
-                src="https://lh3.googleusercontent.com/a/ACg8ocILThw3dyD7aa_dC8z2EALUT-f77_78LLqWqz0odUoAIbLkONHI=s96-c"
+                src={rating.user.image ? rating.user.image : ""}
               />
               <AvatarFallback className="bg-gray-500 font-bold">
-                R
+                {rating.user?.name?.substring(0, 1)}
               </AvatarFallback>
             </Avatar>
           </div>
