@@ -21,7 +21,7 @@ const UserLoggedButton = ({ session }: UserLoggedButtonProps) => {
       {session?.user ? (
         <div className="flex items-center justify-center gap-4">
           <div className="bg-vertical-gradient rounded-full p-[2px]">
-            <Link href={`profile/${(session?.user as any).id}`}>
+            <Link href={`/profile/${(session?.user as any).id}`}>
               <Avatar className="border-vertical-gradient h-9 w-9">
                 <AvatarImage
                   alt="user profile image"
