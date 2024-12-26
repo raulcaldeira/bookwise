@@ -12,7 +12,7 @@ const Sidebar = ({ session }: SidebarProps) => {
   return (
     <div
       className="flex h-full flex-col justify-between bg-cover bg-center px-14 py-10"
-      style={{ backgroundImage: "url('images/sidebar-bg.png')" }}
+      style={{ backgroundImage: "url('/images/sidebar-bg.png')" }}
     >
       <div>
         <Image src="/images/logo.png" alt="bookwise" height={150} width={150} />
