@@ -12,6 +12,7 @@ import {
 import { db } from "@/app/_lib/prisma"
 import { getYear } from "date-fns"
 import { notFound } from "next/navigation"
+import Metrics from "./components/metrics"
 
 interface ProfileProps {
   params: {
@@ -27,9 +28,71 @@ export default async function Profile({ params }: ProfileProps) {
   const userData = await db.user.findUnique({ where: { id: profileId } })
 
   if (!userData) {
-    // Redireciona para a página de 404 se o usuário não for encontrado
     notFound()
   }
+
+  const [totalPagesRead, totalBooksRated, totalAuthorRead, mostReadCategory] =
+    await Promise.all([
+      // TOTAL PAGES READ
+      db.book.aggregate({
+        _sum: {
+          total_pages: true,
+        },
+        where: {
+          Rating: {
+            some: {
+              user_id: profileId,
+            },
+          },
+        },
+      }),
+
+      // TOTAL BOOKS RATED
+      db.rating.aggregate({
+        _count: {
+          _all: true,
+        },
+        where: {
+          user_id: profileId,
+        },
+      }),
+
+      // TOTAL AUTHORS READ
+      db.book.findMany({
+        select: {
+          author: true, // Selecionando apenas os campos necessários
+        },
+        where: {
+          Rating: {
+            some: {
+              user_id: profileId,
+            },
+          },
+        },
+        distinct: ["author"], // Distinct ensures that we only get unique authors
+      }),
+
+      // MOST READ CATEGORY
+      db.book.groupBy({
+        by: ["category"],
+        where: {
+          Rating: {
+            some: {
+              user_id: profileId,
+            },
+          },
+        },
+        _count: {
+          category: true,
+        },
+        orderBy: {
+          _count: {
+            category: "desc",
+          },
+        },
+        take: 1,
+      }),
+    ])
 
   return (
     <section className="flex h-full">
@@ -68,6 +131,15 @@ export default async function Profile({ params }: ProfileProps) {
             </div>
 
             <div className="bg-horizontal-gradient mx-auto my-8 h-[4px] w-[32px]"></div>
+
+            <div>
+              <Metrics
+                totalPagesRead={Number(totalPagesRead._sum.total_pages || 0)}
+                totalBooksRated={totalBooksRated._count._all || 0}
+                totalAuthorRead={totalAuthorRead.length}
+                mostReadCategory={mostReadCategory[0].category[0] || ""}
+              />
+            </div>
           </section>
         </div>
       </div>
