@@ -132,7 +132,7 @@ export default async function Profile({ params }: ProfileProps) {
 
             <div className="bg-horizontal-gradient mx-auto my-8 h-[4px] w-[32px]"></div>
 
-            <div>
+            <div className="py-5">
               <Metrics
                 totalPagesRead={Number(totalPagesRead._sum.total_pages || 0)}
                 totalBooksRated={totalBooksRated._count._all || 0}
