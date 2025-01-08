@@ -13,6 +13,8 @@ import { db } from "@/app/_lib/prisma"
 import { getYear } from "date-fns"
 import { notFound } from "next/navigation"
 import Metrics from "./components/metrics"
+import RatingCard from "./components/rating-card"
+import { ScrollArea } from "@/app/_components/ui/scroll-area"
 
 interface ProfileProps {
   params: {
@@ -94,6 +96,15 @@ export default async function Profile({ params }: ProfileProps) {
       }),
     ])
 
+  const userBookRatings = await db.rating.findMany({
+    where: {
+      user_id: profileId,
+    },
+    include: {
+      book: true,
+    },
+  })
+
   return (
     <section className="flex h-full">
       <div className="p-5">
@@ -104,9 +115,18 @@ export default async function Profile({ params }: ProfileProps) {
           icon={<User size={30} className="text-green-100" />}
           text="Perfil"
         />
-        <div className="mt-10 flex gap-16">
-          <section className="flex-1">
-            <Searchbar />
+        <div className="mt-10 flex h-full gap-16 overflow-hidden pb-5">
+          <section className="flex h-full flex-1 flex-col gap-8">
+            {/* TODO: SEARCHBAR */}
+            {/* <Searchbar /> */}
+
+            <ScrollArea className="flex-1">
+              <div className="flex flex-col gap-6">
+                {userBookRatings.map((bookRating) => (
+                  <RatingCard bookRating={bookRating} />
+                ))}
+              </div>
+            </ScrollArea>
           </section>
           <section className="h-[555px] w-[308px] border-l border-gray-700">
             <div className="bg-vertical-gradient mx-auto flex w-fit items-center justify-center rounded-full p-[1px]">
