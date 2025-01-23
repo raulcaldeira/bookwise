@@ -128,10 +128,10 @@ export default async function Profile({ params }: ProfileProps) {
               <Avatar className="h-[72px] w-[72px]">
                 <AvatarImage
                   alt="user profile image"
-                  src={session?.user?.image ? session.user.image : ""}
+                  src={userData.image ? userData.image : ""}
                 />
                 <AvatarFallback className="bg-gray-500 font-bold">
-                  {session?.user?.name?.substring(0, 1)}
+                  {userData.name?.substring(0, 1)}
                 </AvatarFallback>
               </Avatar>
             </div>
