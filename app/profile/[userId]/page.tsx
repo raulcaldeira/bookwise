@@ -3,7 +3,6 @@ import TitlePage from "@/app/_components/title-page"
 import { authOptions } from "@/app/_lib/auth"
 import { User } from "lucide-react"
 import { getServerSession } from "next-auth"
-import Searchbar from "./components/searchbar"
 import {
   Avatar,
   AvatarFallback,
@@ -13,8 +12,7 @@ import { db } from "@/app/_lib/prisma"
 import { getYear } from "date-fns"
 import { notFound } from "next/navigation"
 import Metrics from "./components/metrics"
-import RatingCard from "./components/rating-card"
-import { ScrollArea } from "@/app/_components/ui/scroll-area"
+import UserRatings from "./components/userRatings"
 
 interface ProfileProps {
   params: {
@@ -103,6 +101,9 @@ export default async function Profile({ params }: ProfileProps) {
     include: {
       book: true,
     },
+    orderBy: {
+      created_at: "desc",
+    },
   })
 
   return (
@@ -117,16 +118,10 @@ export default async function Profile({ params }: ProfileProps) {
         />
         <div className="mt-10 flex h-full gap-16 overflow-hidden pb-5">
           <section className="flex h-full flex-1 flex-col gap-8">
-            {/* TODO: SEARCHBAR */}
-            {/* <Searchbar /> */}
-
-            <ScrollArea className="flex-1">
-              <div className="flex flex-col gap-6">
-                {userBookRatings.map((bookRating) => (
-                  <RatingCard bookRating={bookRating} />
-                ))}
-              </div>
-            </ScrollArea>
+            <UserRatings
+              profileId={profileId}
+              allUserBookRatings={userBookRatings}
+            />
           </section>
           <section className="h-[555px] w-[308px] border-l border-gray-700">
             <div className="bg-vertical-gradient mx-auto flex w-fit items-center justify-center rounded-full p-[1px]">
@@ -146,7 +141,7 @@ export default async function Profile({ params }: ProfileProps) {
                 {userData?.name}
               </h3>
               <p className="text-center text-gray-400 opacity-75">
-                membro desde {getYear(new Date(userData?.createdAt!))}
+                membro desde {getYear(new Date(userData?.createdAt ?? ""))}
               </p>
             </div>
 

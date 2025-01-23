@@ -4,7 +4,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/app/_components/ui/avatar"
-import formatDate from "@/app/utils/format-date"
+import formatDate from "@/app/_utils/format-date"
 import { Prisma } from "@prisma/client"
 import Image from "next/image"
 

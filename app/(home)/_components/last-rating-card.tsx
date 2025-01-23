@@ -1,6 +1,6 @@
 import RatingStars from "@/app/_components/rating-stars"
 import { db } from "@/app/_lib/prisma"
-import formatDate from "@/app/utils/format-date"
+import formatDate from "@/app/_utils/format-date"
 import { Book, Rating } from "@prisma/client"
 import { Session } from "next-auth"
 import Image from "next/image"

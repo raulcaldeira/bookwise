@@ -1,5 +1,5 @@
 import RatingStars from "@/app/_components/rating-stars"
-import formatDate from "@/app/utils/format-date"
+import formatDate from "@/app/_utils/format-date"
 import { Prisma } from "@prisma/client"
 import Image from "next/image"
 
